@@ -1,0 +1,63 @@
+<html>
+
+<head>
+    <style>
+        html {
+            background-color: gray;
+        }
+
+        table {
+            border: 1px solid blue;
+            text-align: center;
+            border-collapse: collapse;
+        }
+        button {
+            border: 2px solid gold;
+            background-color: black;
+            color: white;
+        }
+
+        #title {
+            background-color: blue;
+            color: white;
+        }
+    </style>
+    <script>
+        function qiAdd(){
+            qiCountStat = document.getElementById("qiCount").innerText
+            qiGen = document.getElementById("qiGen").innerText
+            document.getElementById("qiCount").innerText = Number(qiCountStat) + Number(qiGen)
+        }
+        function qiAuto(){
+            qiCountStat = document.getElementById("qiCount").innerText
+            qiGen = document.getElementById("qiAuto").innerText
+            document.getElementById("qiCount").innerText = Number(qiCountStat) + Number(qiGen)
+        }
+        setInterval("qiAuto()","1000")
+    </script>
+</head>
+
+<body>
+    <table>
+        <tr id="title">
+            <th colspan="3">不過是沒有資質的凡人臨終前的幻想罷了</td>
+        </tr>
+        <tr>
+            <td>體內靈力:</td>
+            <td id="qiCount">0</td>
+            <td>
+                <button onclick="qiAdd()">修煉</button>
+            </td>
+        </tr>
+        <tr>
+            <td>每次點擊增加靈力:</td>
+            <td id="qiGen">1</td>
+        </tr>
+        <tr>
+            <td>每秒自動增加靈力:</td>
+            <td id="qiAuto">5</td>
+        </tr>
+    </table>
+</body>
+
+</html>
