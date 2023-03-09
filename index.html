@@ -10,7 +10,11 @@
             border: 1px solid blue;
             text-align: center;
             border-collapse: collapse;
+            margin: 0 auto;
+            table-layout: fixed;
+            width: 40%;
         }
+
         button {
             border: 2px solid gold;
             background-color: black;
@@ -23,17 +27,99 @@
         }
     </style>
     <script>
-        function qiAdd(){
-            qiCountStat = document.getElementById("qiCount").innerText
-            qiGen = document.getElementById("qiGen").innerText
-            document.getElementById("qiCount").innerText = Number(qiCountStat) + Number(qiGen)
+        let stat = {
+            qiTotal: "0",
+            qiRank: "0",
+            qiPC: "1",
+            qiPS: "0",
+            qiRankreq: "100",
+            qiPCreq: "10",
+            qiPSreq: "100",
         }
-        function qiAuto(){
-            qiCountStat = document.getElementById("qiCount").innerText
-            qiGen = document.getElementById("qiAuto").innerText
-            document.getElementById("qiCount").innerText = Number(qiCountStat) + Number(qiGen)
+
+        let Rank = [
+            "凡人",
+            "練氣境",
+            "築基境",
+            "結丹境",
+            "元嬰境",
+            "化神境",
+            "煉虛境",
+            "合體境",
+            "大乘境",
+            "真仙境",
+            "金仙境",
+            "太乙境",
+            "大羅境",
+            "道祖"
+
+        ]
+
+        function refreshAll() {
+            document.getElementById("qiTotal").innerText = stat.qiTotal + "/" + stat.qiRankreq;
+            document.getElementById("qiRank").innerText = Rank[(Number(stat.qiRank))];
+            document.getElementById("qiPC").innerText = stat.qiPC + "/" + stat.qiPCreq;
+            document.getElementById("qiPS").innerText = stat.qiPS + "/" + stat.qiPSreq;
         }
-        setInterval("qiAuto()","1000")
+        window.onload = function () {
+            var statStr = localStorage.getItem('statSaved');
+            stat = JSON.parse(statStr);
+
+            refreshAll();
+        }
+        window.onunload = function () {
+            var statStr = JSON.stringify(stat);
+            localStorage.setItem('statSaved', statStr);
+        }
+
+        function reset() {
+            stat = {
+                qiTotal: "0",
+                qiRank: "0",
+                qiPC: "1",
+                qiPS: "2",
+                qiRankreq: "100",
+                qiPCreq: "10",
+                qiPSreq: "100",
+            };
+            refreshAll();
+        }
+
+
+
+        function qiAdd(way) {
+            stat.qiTotal = Number(stat.qiTotal) + Number(way);
+            qiRankUP();
+            refreshAll();
+        }
+
+        function qiRankUP() {
+            if (Number(stat.qiTotal) >= Number(stat.qiRankreq)) {
+                stat.qiRank = Number(stat.qiRank)+ 1;
+                stat.qiRankreq = Number(stat.qiRankreq) * 100
+            };
+
+            refreshAll();
+        }
+        
+        function qiPCUP() {
+            if (Number(stat.qiTotal) >= Number(stat.qiPCreq)) {
+                stat.qiTotal = Number(stat.qiTotal) - Number(stat.qiPCreq);
+                stat.qiPC = Number(stat.qiPC) * 2;
+                stat.qiPCreq = Number(stat.qiPCreq) * 5;
+            };
+
+            refreshAll();
+        }
+
+
+
+
+
+
+
+
+        setInterval("qiAdd(stat.qiPS)", "1000")
     </script>
 </head>
 
@@ -44,18 +130,28 @@
         </tr>
         <tr>
             <td>體內靈力:</td>
-            <td id="qiCount">0</td>
+            <td id="qiTotal">0</td>
             <td>
-                <button onclick="qiAdd()">修煉</button>
+                <button onclick="qiAdd(stat.qiPC)">修煉</button>
             </td>
         </tr>
         <tr>
+            <td>境界:</td>
+            <td id="qiRank"></td>
+        </tr>
+        <tr>
             <td>每次點擊增加靈力:</td>
-            <td id="qiGen">1</td>
+            <td id="qiPC"></td>
+            <td>
+                <button onclick="qiPCUP()">升級</button>
+            </td>
         </tr>
         <tr>
             <td>每秒自動增加靈力:</td>
-            <td id="qiAuto">5</td>
+            <td id="qiPS"></td>
+        </tr>
+        <tr>
+            <td colspan="3"><button onclick="reset()">重設</button></td>
         </tr>
     </table>
 </body>
