@@ -118,6 +118,119 @@
 
 
 
+        setInterval("qiAdd(stat.qiPS)", "1000")
+    </script>
+</head>
+
+<body>
+    <table>
+        <tr id="title">
+            <th colspan="3">不過是沒有資質的凡人臨終前的幻想罷了</td>
+        </tr>
+        <tr>
+            <td>體內靈力:</td>
+            <td id="qiTotal">0</td>
+            <td>
+                <button onclick="qiAdd(stat.qiPC)">修煉</button>
+            </td>
+        </tr>
+        <tr>
+            <td>境界:</td>
+            <td id="qiRank"></td>
+        </tr>
+        <tr>
+            <td>每次點擊增加靈力:</td>
+            <td id="qiPC"></td>
+            <td>
+                <button onclick="qiPCUP()">升級</button>
+            </td>
+        </tr>
+        <tr>
+            <td>每秒自動增加靈力:</td>
+            <td id="qiPS"></td>
+        </tr>
+        <tr>
+            <td colspan="3"><button onclick="reset()">重設</button></td>
+        </tr>
+    </table>
+</body>
+
+</html>
+            "化神境",
+            "煉虛境",
+            "合體境",
+            "大乘境",
+            "真仙境",
+            "金仙境",
+            "太乙境",
+            "大羅境",
+            "道祖"
+
+        ]
+
+        function refreshAll() {
+            document.getElementById("qiTotal").innerText = stat.qiTotal + "/" + stat.qiRankreq;
+            document.getElementById("qiRank").innerText = Rank[(Number(stat.qiRank))];
+            document.getElementById("qiPC").innerText = stat.qiPC + "/" + stat.qiPCreq;
+            document.getElementById("qiPS").innerText = stat.qiPS + "/" + stat.qiPSreq;
+        }
+        window.onload = function () {
+            var statStr = localStorage.getItem('statSaved');
+            stat = JSON.parse(statStr);
+
+            refreshAll();
+        }
+        window.onunload = function () {
+            var statStr = JSON.stringify(stat);
+            localStorage.setItem('statSaved', statStr);
+        }
+
+        function reset() {
+            stat = {
+                qiTotal: "0",
+                qiRank: "0",
+                qiPC: "1",
+                qiPS: "2",
+                qiRankreq: "100",
+                qiPCreq: "10",
+                qiPSreq: "100",
+            };
+            refreshAll();
+        }
+
+
+
+        function qiAdd(way) {
+            stat.qiTotal = Number(stat.qiTotal) + Number(way);
+            qiRankUP();
+            refreshAll();
+        }
+
+        function qiRankUP() {
+            if (Number(stat.qiTotal) >= Number(stat.qiRankreq)) {
+                stat.qiRank = Number(stat.qiRank)+ 1;
+                stat.qiRankreq = Number(stat.qiRankreq) * 100
+            };
+
+            refreshAll();
+        }
+        
+        function qiPCUP() {
+            if (Number(stat.qiTotal) >= Number(stat.qiPCreq)) {
+                stat.qiTotal = Number(stat.qiTotal) - Number(stat.qiPCreq);
+                stat.qiPC = Number(stat.qiPC) * 2;
+                stat.qiPCreq = Number(stat.qiPCreq) * 5;
+            };
+
+            refreshAll();
+        }
+
+
+
+
+
+
+
         refreshAll();
         setInterval("qiAdd(stat.qiPS)", "1000")
     </script>
