@@ -1,0 +1,66 @@
+<html>
+
+<head>
+    <script>
+// basic
+        let stat = [
+            ["氣總量", 5, "修煉", "qiAdd(stat[2][1])"],
+            ["境界", 33, "突破", ""],
+            ["每下氣", 516, "", ""],
+            ["每秒氣", 5151, "", ""]
+        ];
+        window.onload = function () {
+            var statStr = localStorage.getItem("statLocal");
+            stat = JSON.parse(statStr);
+        };
+        window.onunload = function () {
+            var statStr = JSON.stringify(stat);
+            localStorage.setItem('strLocal', statStr);
+        };
+// function
+        function Expo(number, digit) {
+            var str = number.toExponential(digit)
+            str = str.replace(/\+|.00e\+0|0e\+1|e\+2/, "")
+            return (str);
+        };
+
+        function qiAdd(way) {
+            var qiTotal = stat[0][1];
+            qiTotal += Number(way);
+            stat[0][1] = qiTotal;
+            document.getElementById("氣總量").innerHTML = qiTotal;
+
+        };
+
+        function show() {
+            document.write('<table>');
+            for (i in stat) {
+
+                document.write(
+                    `<tr>
+                            <td> 
+                                ${stat[i][0]} :
+                            </td>
+                            <td id="${stat[i][0]}">
+                                ${Expo(stat[i][1], 2)}
+                            </td>
+                            <td>
+                                <button onclick=${stat[i][3]}>
+                                    ${stat[i][2]} 
+                                </button>
+                            </td>
+                        </tr>`
+                );
+            };
+            document.write('</table>');
+        };
+        show();
+    </script>
+</head>
+
+<body>
+
+
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+<html>
+
+<head>
+    <style>
+
+    </style>
+    <script>
+        //var
+        var stat = [
+            ["Total:", 3, '<button onclick = "TotalAdd()">click</button>'],
+            ["PerClick:", 7],
+            [],
+        ]
+    </script>
+    <script>
+        // function
+        function makeTable(array, tableID) {
+            document.write(`<table id="${tableID}">`)
+            for (i in array) {
+                document.getElementById(`${tableID}`).innerHTML += `<tr id="tr${i}">`;
+                for (x in array[i]) {
+                    document.getElementById(`tr${i}`).innerHTML +=
+                        `<td id="td${i}_${x}">${array[i][x]}</td>`;
+                };
+                document.getElementById(`${tableID}`).innerHTML += `</tr>`;
+            };
+            document.write(`</table>`)
+        }
+        function TotalAdd() {
+            stat[0][1] += stat[1][1]
+            document.getElementById("td0_1").innerHTML = stat[0][1]
+            
+        }
+    </script>
+    <script>
+        //use
+        makeTable(stat)
+    </script>
+</head>
+
+<body>
+
+</body>
+
+</html>
