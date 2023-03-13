@@ -35,6 +35,8 @@
         function CostTotal2() {
             if (stat[0][1] < stat[1][1] ** 2) {
                 document.getElementById("notEnough").style.display = 'block';
+                document.getElementById("notEnough").innerHTML = `<b>Total Is Not Enough To Upgrade!<br>U Need ${str} More!</b>`;
+
             } else {
                 document.getElementById("notEnough").style.display = 'none'
             }
