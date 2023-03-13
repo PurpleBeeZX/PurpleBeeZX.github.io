@@ -1,45 +1,61 @@
 <html>
 
 <head>
-    <style>
-
-    </style>
+    <link rel="stylesheet" href="style.css">
+    <script src="code.js"></script>
     <script>
         //var
         var stat = [
-            ["Total:", 3, '<button onclick = "TotalAdd()">click</button>'],
-            ["PerClick:", 7],
+            ["Total:", 3, '<button onclick = "TotalAdd()">+</button>'],
+            ["PerClick:", 7, '<button onclick = "CostTotal1()" onmouseover = CostTotal2() onmouseout = CostTotal3()>+</button>'],
             [],
         ]
     </script>
     <script>
         // function
-        function makeTable(array, tableID) {
-            document.write(`<table id="${tableID}">`)
-            for (i in array) {
-                document.getElementById(`${tableID}`).innerHTML += `<tr id="tr${i}">`;
-                for (x in array[i]) {
-                    document.getElementById(`tr${i}`).innerHTML +=
-                        `<td id="td${i}_${x}">${array[i][x]}</td>`;
-                };
-                document.getElementById(`${tableID}`).innerHTML += `</tr>`;
-            };
-            document.write(`</table>`)
-        }
         function TotalAdd() {
             stat[0][1] += stat[1][1]
             document.getElementById("td0_1").innerHTML = stat[0][1]
-            
+
         }
+
+        function CostTotal1() {
+            if (stat[0][1] >= stat[1][1] ** 2) {
+                stat[0][1] -= stat[1][1] ** 2;
+                stat[1][1] += 1;
+                document.getElementById("td0_1").innerHTML = stat[0][1];
+                document.getElementById("td1_1").innerHTML = stat[1][1];
+            } else {
+                var str = stat[1][1] ** 2 - stat[0][1];
+                document.getElementById("notEnough").innerHTML = `<b>Total Is Not Enough To Upgrade!<br>U Need ${str} More!</b>`;
+                document.getElementById("notEnough").style.display = 'block';
+                document.getElementById("notEnough").style.display = 'none'
+            }
+        }
+        function CostTotal2() {
+            if (stat[0][1] < stat[1][1] ** 2) {
+                document.getElementById("notEnough").style.display = 'block';
+            } else {
+                document.getElementById("notEnough").style.display = 'none'
+            }
+        };
+        function CostTotal3() {
+            document.getElementById("notEnough").style.display = 'none'
+        };
     </script>
-    <script>
-        //use
-        makeTable(stat)
-    </script>
+
 </head>
 
 <body>
-
+    <script>
+        //use
+        makeTable(stat,'table1')
+        document.getElementById('table1').innerHTML = `<tr><td><b>STAT</b></td><td><b>COUNT</b></td></tr>` + document.getElementById('table1').innerHTML
+        
+    </script>
+    <div id="notEnough" style="display: none;">
+        <b>Total Is Not Enough To Upgrade!<br>U Need x More!</b>
+    </div>
 </body>
 
 </html>
