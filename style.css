@@ -51,23 +51,15 @@ tr:nth-child(1){
 
 @keyframes chrome_bd {
     0%{border-color: red;}
-    12.5%{border-color: yellow;}
-    25%{border-color:green}
-    37.5%{border-color:blue}
-    50%{border-color:purple;}
-    62.5%{border-color:blue}
-    75%{border-color:green}
-    87.5%{border-color: yellow;}
+    25%{border-color: yellow;}
+    50%{border-color:green}
+    75%{border-color:blue}
     100%{border-color: red;}
 }
 @keyframes chrome_bg {
     0%{background: red;}
-    12.5%{background: yellow;}
-    25%{background:green}
-    37.5%{background:blue}
-    50%{background:purple;}
-    62.5%{background:blue}
-    75%{background:green}
-    87.5%{background: yellow;}
+    25%{background: yellow;}
+    50%{background:green}
+    75%{background:blue}
     100%{background: red;}
 }
